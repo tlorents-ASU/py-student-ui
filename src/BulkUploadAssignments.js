@@ -5,6 +5,7 @@ import {
   TableCell, TableBody, Snackbar, Alert
 } from '@mui/material';
 
+
 const columnMapping = {
   'Position': 'Position',
   'FultonFellow': 'FultonFellow',
@@ -63,7 +64,7 @@ const BulkUploadAssignments = () => {
       const formData = new FormData();
       formData.append("file", file);
   
-      const response = await fetch('http://localhost:5276/api/StudentClassAssignment/upload', {
+      const response = await fetch(`${baseUrl}/api/StudentClassAssignment/upload`, {
         method: 'POST',
         body: formData
       });

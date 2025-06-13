@@ -217,12 +217,6 @@ const ClassLookupCascade = ({ setClassDetails }) => {
             InputProps={{ readOnly: true }}
             sx={{ width: 100 }}
           />
-          {/* <TextField
-            label="Term"
-            value={localClassDetails.term || ''}
-            InputProps={{ readOnly: true }}
-            sx={{ width: 100 }}
-          /> */}
           <TextField
             label="Instructor ID"
             disabled

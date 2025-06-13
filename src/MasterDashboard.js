@@ -203,7 +203,7 @@ export default function MasterDashboard() {
       // ✅ Update the local state to reflect saved checkboxes
       setRows((prevRows) =>
         prevRows.map(row =>
-          row.id === selectedRow.id ? { ...row, ...payload } : row
+          row.Id === selectedRow.Id ? { ...row, ...payload } : row
         )
       );
   
@@ -214,8 +214,8 @@ export default function MasterDashboard() {
   };
 
   const columns = [
-    { field: 'StudentName', headerName: 'Student Name', headerAlign: 'center', flex: 1, minWidth: 150, maxWidth: 300 },
-    { field: 'student_ID', headerName: 'ASU ID', headerAlign: 'center', width: 140 },
+    { field: 'studentName', headerName: 'Student Name', headerAlign: 'center', flex: 1, minWidth: 150, maxWidth: 300 },
+    { field: 'Student_ID', headerName: 'ASU ID', headerAlign: 'center', width: 140 },
     { field: 'position', headerName: 'Position', headerAlign: 'center', width: 150 },
     { field: 'weeklyHours', headerName: 'Hours', headerAlign: 'center', width: 80 },
     { field: 'fultonFellow', headerName: 'Fulton Fellow', headerAlign: 'center', width: 120 },
@@ -255,27 +255,27 @@ export default function MasterDashboard() {
       .then(data => {
         const mapped = data.map(r => ({
           id: r.id,
-          studentName: `${r.first_Name} ${r.last_Name}`,
-          student_ID: r.student_ID,
-          position: r.position,
-          weeklyHours: r.weeklyHours,
-          fultonFellow: r.fultonFellow,
-          email: r.email,
-          educationLevel: r.educationLevel,
-          instructorName: `${r.instructorFirstName} ${r.instructorLastName}`,
-          subject: r.subject,
-          catalogNum: r.catalogNum,
-          classSession: r.classSession,
-          location: r.location,
-          campus: r.campus,
-          classNum: r.classNum,
-          costCenterKey: r.costCenterKey,
-          compensation: r.compensation,
-          position_Number: r.position_Number || '',
-          i9_Sent: r.i9_Sent,
-          ssN_Sent: r.ssN_Sent,
-          offer_Sent: r.offer_Sent,
-          offer_Signed: r.offer_Signed
+          studentName: `${r.First_Name} ${r.Last_Name}`,
+          student_ID: r.Student_ID,
+          position: r.Position,
+          weeklyHours: r.WeeklyHours,
+          fultonFellow: r.FultonFellow,
+          email: r.Email,
+          educationLevel: r.EducationLevel,
+          instructorName: `${r.InstructorFirstName} ${r.InstructorLastName}`,
+          subject: r.Subject,
+          catalogNum: r.CatalogNum,
+          classSession: r.ClassSession,
+          location: r.Location,
+          campus: r.Campus,
+          classNum: r.ClassNum,
+          costCenterKey: r.CostCenterKey,
+          compensation: r.Compensation,
+          position_Number: r.Position_Number || '',
+          i9_Sent: r.I9_Sent,
+          ssN_Sent: r.SSN_Sent,
+          offer_Sent: r.Offer_Sent,
+          offer_Signed: r.Offer_Signed
         }));
         setRows(mapped);
       })
@@ -287,7 +287,7 @@ export default function MasterDashboard() {
 
   const handleRowUpdate = async (newRow) => {
     try {
-      const response = await fetch(`${baseUrl}/api/StudentClassAssignment/${newRow.id}`, {
+      const response = await fetch(`${baseUrl}/api/StudentClassAssignment/${newRow.Id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -22,7 +22,7 @@ const AssignmentAdder = ({ studentData, classDetails, onReset }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [assignmentSummary, setAssignmentSummary] = useState(null);
 
-  const session = classDetails?.classSession || classDetails?.session || '';
+  const session = classDetails?.ClassSession || classDetails?.Session || '';
 
   const calculateComp = (pos, hours, edu, fellow, session) => {
     const h = parseInt(hours, 10);
@@ -47,8 +47,8 @@ const AssignmentAdder = ({ studentData, classDetails, onReset }) => {
     return 0;
   };
 
-  const compensation = calculateComp(position, weeklyHours, studentData?.degree, fultonFellow, session);
-  const costCenter = computeCostCenterKey(position, classDetails?.location, classDetails?.campus, classDetails?.acadCareer);
+  const compensation = calculateComp(position, weeklyHours, studentData?.Degree, fultonFellow, session);
+  const costCenter = computeCostCenterKey(position, classDetails?.Location, classDetails?.Campus, classDetails?.AcadCareer);
 
   
   const handleSubmit = async () => {
@@ -63,23 +63,23 @@ const AssignmentAdder = ({ studentData, classDetails, onReset }) => {
     const payload = {
       Student_ID: studentData.Student_ID,
       Position: position,
-      Email: studentData.asU_Email_Adress,
-      First_Name: studentData.first_Name,
-      Last_Name: studentData.last_Name,
-      EducationLevel: studentData.degree,
+      Email: studentData.ASU_Email_Adress,
+      First_Name: studentData.First_Name,
+      Last_Name: studentData.Last_Name,
+      EducationLevel: studentData.Degree,
       Subject: classDetails?.subject || '',
       CatalogNum: classDetails?.catalogNum || '',
       ClassSession: session,
       ClassNum: classDetails?.classNum || '',
-      Term: classDetails?.term || '',
-      InstructorFirstName: classDetails?.instructorFirstName || '',
-      InstructorLastName: classDetails?.instructorLastName || '',
+      Term: classDetails?.Term || '',
+      InstructorFirstName: classDetails?.InstructorFirstName || '',
+      InstructorLastName: classDetails?.InstructorLastName || '',
       WeeklyHours: parseInt(weeklyHours, 10),
       FultonFellow: fultonFellow,
       Compensation: compensation,
-      Location: classDetails?.location || '',
-      Campus: classDetails?.campus || '',
-      AcadCareer: classDetails?.acadCareer || '',
+      Location: classDetails?.Location || '',
+      Campus: classDetails?.Campus || '',
+      AcadCareer: classDetails?.AcadCareer || '',
       CostCenterKey: costCenter
     };
 
@@ -293,21 +293,24 @@ const AssignmentAdder = ({ studentData, classDetails, onReset }) => {
 
       {/* ✅ Clean Confirmation Modal */}
       <Dialog open={modalOpen} onClose={handleModalClose} fullWidth maxWidth="sm">
-        <DialogTitle>Assignment Confirmation</DialogTitle>
+        <DialogTitle>Assignment Confirmation - Print For Own Records</DialogTitle>
         <DialogContent dividers>
           {assignmentSummary && (
             <Box>
               <Typography><strong>Student:</strong> {assignmentSummary.First_Name} {assignmentSummary.Last_Name}</Typography>
+              <Typography><strong>Student ID:</strong> {assignmentSummary.Student_ID}</Typography>
               <Typography><strong>Email:</strong> {assignmentSummary.Email}</Typography>
+              <Typography><strong>Education Level:</strong> {assignmentSummary.EducationLevel}</Typography>
               <Typography><strong>Position:</strong> {assignmentSummary.Position}</Typography>
-              <Typography><strong>Course:</strong> {assignmentSummary.Subject} {assignmentSummary.CatalogNum}</Typography>
               <Typography><strong>Class #:</strong> {assignmentSummary.ClassNum}</Typography>
+              <Typography><strong>Course:</strong> {assignmentSummary.Subject} - {assignmentSummary.CatalogNum}</Typography>
               <Typography><strong>Session:</strong> {assignmentSummary.ClassSession}</Typography>
+              <Typography><strong>Instructor:</strong> {assignmentSummary.InstructorFirstName} {assignmentSummary.InstructorLastName}</Typography>
               <Typography><strong>Weekly Hours:</strong> {assignmentSummary.WeeklyHours}</Typography>
               <Typography><strong>Fulton Fellow:</strong> {assignmentSummary.FultonFellow}</Typography>
               <Typography><strong>Compensation:</strong> ${assignmentSummary.Compensation.toLocaleString()}</Typography>
               <Typography><strong>Cost Center:</strong> {assignmentSummary.CostCenterKey}</Typography>
-              <Typography><strong>Instructor:</strong> {assignmentSummary.InstructorFirstName} {assignmentSummary.InstructorLastName}</Typography>
+              
             </Box>
           )}
         </DialogContent>
