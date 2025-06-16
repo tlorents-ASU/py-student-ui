@@ -1,121 +1,3 @@
-// // DataGrid customization but can not order the columns, this could be the best option, but can filter above
-
-
-// //// src/MasterDashboard.js
-// import React, { useState, useEffect } from 'react';
-// import { DataGrid }                    from '@mui/x-data-grid';
-// import { Paper, Typography }           from '@mui/material';
-
-// const currencyFormatter = new Intl.NumberFormat('en-US', {
-//     style: 'currency',
-//     currency: 'USD',
-//   });
-
-// const usdPrice = {
-//     type: 'number',
-//     width: 130,
-//     valueFormatter: (value) => currencyFormatter.format(value),
-//     cellClassName: 'font-tabular-nums',
-//   };
-
-// export default function MasterDashboard() {
-//   const [rows, setRows] = useState([]);
-//   const columns =[
-//     { field: 'studentName',    headerName: 'Student Name', headerAlign: 'center',  flex: 1, minWidth:150, maxWidth: 300 },
-//     { field: 'student_ID',     headerName: 'ASU ID', headerAlign: 'center', width:  140 },
-//     { field: 'position',       headerName: 'Position', headerAlign: 'center', width: 150 },
-//     { field: 'weeklyHours',    headerName: 'Hours', headerAlign: 'center', width:  100 },
-//     { field: 'fultonFellow',   headerName: 'Fulton Fellow', headerAlign: 'center', width: 120 },
-//     { field: 'email',          headerName: 'Email', headerAlign: 'center', flex: 1, minWidth:150, maxWidth: 300, filterable: true },
-//     { field: 'educationLevel', headerName: 'Education', headerAlign: 'center', width: 140 },
-//     { field: 'instructorName', headerName: 'Instructor Name', headerAlign: 'center', flex: 1, minWidth:150, maxWidth: 300 },
-//     { field: 'subject',        headerName: 'Subject', headerAlign: 'center', width: 100 },
-//     { field: 'catalogNum',     headerName: 'Catalog #', headerAlign: 'center', width: 100, type: 'number' },
-//     { field: 'classSession',   headerName: 'Session', headerAlign: 'center', width:  100 },
-//     { field: 'location',       headerName: 'Location', headerAlign: 'center', width: 120 },
-//     { field: 'campus',         headerName: 'Campus', headerAlign: 'center', width: 110 },
-//     { field: 'classNum',       headerName: 'Class #',  headerAlign: 'center',   width: 110 },
-//     { field: 'costCenterKey',  headerName: 'Cost Center', headerAlign: 'center',  width: 160 },
-//     { field: 'compensation',headerName: 'Compensation', headerAlign: 'center', width: 140, ...usdPrice}
-//   ];
-//   const [error, setError] = useState('');
-
-//   useEffect(() => {
-//     fetch('https://localhost:7209/api/StudentClassAssignment')
-//       .then(res => {
-//         if (!res.ok) throw new Error('Failed to load assignments');
-//         return res.json();
-//       })
-//       .then(data => {
-//         const mapped = data.map(r => ({
-//           id:               r.id,
-//           studentName:      `${r.first_Name} ${r.last_Name}`,
-//           student_ID:       r.student_ID,
-//           position:         r.position,
-//           weeklyHours:      r.weeklyHours,
-//           fultonFellow:     r.fultonFellow,
-//           email:            r.email,
-//           educationLevel:   r.educationLevel,
-//           instructorName:   `${r.instructorFirstName} ${r.instructorLastName}`,
-//           subject:          r.subject,
-//           catalogNum:       r.catalogNum,
-//           classSession:     r.classSession,
-//           location:         r.location,
-//           campus:           r.campus,
-//           classNum:         r.classNum,
-//           costCenterKey:    r.costCenterKey,
-//           compensation:   r.compensation 
-//         }));
-//         setRows(mapped);
-//       })
-//       .catch(err => {
-//         console.error(err);
-//         setError(err.message);
-//       });
-//   }, []);
-
-//   if (error) {
-//     return (
-//       <Paper style={{ padding: 16, margin: 20 }}>
-//         <Typography color="error">Error: {error}</Typography>
-//       </Paper>
-//     );
-//   }
-
-//   return (
-//     <Paper elevation = {0} style={{ height: 'fit-content', width: '100%', padding: 10}}>
-//       <Typography variant="h5" gutterBottom>
-//         Master Dashboard
-//       </Typography>
-//       <DataGrid 
-//       sx={{
-//         '& .MuiDataGrid-cell': {
-//           textAlign: 'center',
-//         },
-//         '& .MuiDataGrid-columnHeaderTitle': {
-//         fontWeight: 'bold',
-//         fontSize: '1.1em' // medium
-//         //   width: '100%',
-//         },
-//       }}
-//         rows={rows}
-//         columns={columns}
-//         pageSize={50}
-//         rowsPerPageOptions={[10,20,50]}
-//         disableSelectionOnClick
-//         showToolbar
-//         allowColumnReordering={true}
-//       />
-//     </Paper>
-//   );
-// }
-
-
-
-
-
-
-
 //// ------------------ THIS WILL HAVE THE HR CHECKBOXES TO USE FOR I-9, OFFER LETTER SENT AND MORE -------------------------
 
 
@@ -133,6 +15,9 @@ const baseUrl = process.env.REACT_APP_API_URL;
 if (!baseUrl) {
   console.error("REACT_APP_API_URL is not defined. Make sure it's set in your .env file.");
 }
+
+console.log("API base URL:", baseUrl);
+
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -154,20 +39,20 @@ export default function MasterDashboard() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [reviewStatus, setReviewStatus] = useState({
-    i9_Sent: false,
-    ssN_Sent: false,
-    offer_Sent: false,
-    offer_Signed: false,
+    I9_Sent: false,
+    SSN_Sent: false,
+    Offer_Sent: false,
+    Offer_Signed: false,
   });
 
   const handleOpenModal = (row) => {
     setSelectedRow(row);
     // TODO: fetch existing status for row if needed
     setReviewStatus({
-      i9_Sent: row.i9_Sent ?? false,
-      ssN_Sent: row.ssN_Sent ?? false,
-      offer_Sent: row.offer_Sent ?? false,
-      offer_Signed: row.offer_Signed ?? false,
+      I9_Sent: row.I9_Sent ?? false,
+      SSN_Sent: row.SSN_Sent ?? false,
+      Offer_Sent: row.Offer_Sent ?? false,
+      Offer_Signed: row.Offer_Signed ?? false,
     });
     setModalOpen(true);
   };
@@ -188,7 +73,7 @@ export default function MasterDashboard() {
   const handleSaveReview = async () => {
     try {
       const payload = {
-        position_Number: selectedRow.position_Number,
+        Position_Number: selectedRow.position_Number,
         ...reviewStatus
       };
   
@@ -215,7 +100,7 @@ export default function MasterDashboard() {
 
   const columns = [
     { field: 'studentName', headerName: 'Student Name', headerAlign: 'center', flex: 1, minWidth: 150, maxWidth: 300 },
-    { field: 'Student_ID', headerName: 'ASU ID', headerAlign: 'center', width: 140 },
+    { field: 'student_ID', headerName: 'ASU ID', headerAlign: 'center', width: 140 },
     { field: 'position', headerName: 'Position', headerAlign: 'center', width: 150 },
     { field: 'weeklyHours', headerName: 'Hours', headerAlign: 'center', width: 80 },
     { field: 'fultonFellow', headerName: 'Fulton Fellow', headerAlign: 'center', width: 120 },
@@ -253,9 +138,10 @@ export default function MasterDashboard() {
         return res.json();
       })
       .then(data => {
+        console.log("Fetched data:", data);
         const mapped = data.map(r => ({
-          id: r.id,
-          studentName: `${r.First_Name} ${r.Last_Name}`,
+          id: r.Id,
+          studentName: `${r.First_Name ?? ''} ${r.Last_Name ?? ''}`,
           student_ID: r.Student_ID,
           position: r.Position,
           weeklyHours: r.WeeklyHours,
@@ -272,10 +158,10 @@ export default function MasterDashboard() {
           costCenterKey: r.CostCenterKey,
           compensation: r.Compensation,
           position_Number: r.Position_Number || '',
-          i9_Sent: r.I9_Sent,
-          ssN_Sent: r.SSN_Sent,
-          offer_Sent: r.Offer_Sent,
-          offer_Signed: r.Offer_Signed
+          I9_Sent: r.I9_Sent,
+          SSN_Sent: r.SSN_Sent,
+          Offer_Sent: r.Offer_Sent,
+          Offer_Signed: r.Offer_Signed
         }));
         setRows(mapped);
       })
@@ -287,15 +173,15 @@ export default function MasterDashboard() {
 
   const handleRowUpdate = async (newRow) => {
     try {
-      const response = await fetch(`${baseUrl}/api/StudentClassAssignment/${newRow.Id}`, {
+      const response = await fetch(`${baseUrl}/api/StudentClassAssignment/${newRow.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          position_Number: newRow.position_Number,
-          i9_Sent: newRow.i9_Sent ?? false,
-          ssN_Sent: newRow.ssN_Sent ?? false,
-          offer_Sent: newRow.offer_Sent ?? false,
-          offer_Signed: newRow.offer_Signed ?? false
+          Position_Number: newRow.Position_Number,
+          I9_Sent: newRow.i9_Sent ?? false,
+          SSN_Sent: newRow.ssn_Sent ?? false,
+          Offer_Sent: newRow.offer_Sent ?? false,
+          Offer_Signed: newRow.offer_Signed ?? false
         })
       });
   
@@ -350,29 +236,29 @@ export default function MasterDashboard() {
           <FormGroup>
             <FormControlLabel
               control={<Checkbox 
-                name="i9_Sent" 
-                checked={reviewStatus.i9_Sent} 
+                name="I9_Sent" 
+                checked={reviewStatus.I9_Sent} 
                 onChange={handleCheckboxChange} />}
                 label="I-9 Sent"
             />
             <FormControlLabel
               control={<Checkbox 
-                name="ssN_Sent" 
-                checked={reviewStatus.ssN_Sent} 
+                name="SSN_Sent" 
+                checked={reviewStatus.SSN_Sent} 
                 onChange={handleCheckboxChange} />}
                 label="SSN Sent"
             />
             <FormControlLabel
               control={<Checkbox 
-                name="offer_Sent" 
-                checked={reviewStatus.offer_Sent} 
+                name="Offer_Sent" 
+                checked={reviewStatus.Offer_Sent} 
                 onChange={handleCheckboxChange} />}
                 label="Offer Sent"
             />
             <FormControlLabel
               control={<Checkbox 
-                name="offer_Signed" 
-                checked={reviewStatus.offer_Signed} 
+                name="Offer_Signed" 
+                checked={reviewStatus.Offer_Signed} 
                 onChange={handleCheckboxChange} />}
                 label="Offer Signed"
             />
