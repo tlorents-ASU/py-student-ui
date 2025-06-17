@@ -220,8 +220,12 @@ export default function MasterDashboard() {
           }}
           rows={rows}
           columns={columns}
-          pageSize={50}
-          rowsPerPageOptions={[10, 20, 50]}
+          initialState={{
+            pagination: {
+              paginationModel:{pageSize: 25, page: 0},
+            },
+          }}
+          pageSizeOptions={[25, 50, 100]}
           disableSelectionOnClick
           showToolbar
           allowColumnReordering={true}
